@@ -1,7 +1,7 @@
 # StelloVault
 
 **A secure trade finance decentralized application (dApp) built on Stellar & Soroban**  
-Tokenizing collateral (invoices, commodities, etc.) to unlock instant liquidity for African exporters and importers, bridging the massive trade finance gap.
+Tokenizing collateral (invoices, commodities, etc.) to unlock instant liquidity for exporters and importers, bridging the massive trade finance gap.
 
 [![Stellar](https://img.shields.io/badge/Built%20on-Stellar-blue?logo=stellar)](https://stellar.org)
 [![Soroban](https://img.shields.io/badge/Smart%20Contracts-Soroban-orange)](https://soroban.stellar.org)
@@ -10,7 +10,7 @@ Tokenizing collateral (invoices, commodities, etc.) to unlock instant liquidity 
 
 ## 🚀 Overview
 
-StelloVault is a trade finance dApp that enables African SMEs to tokenize real-world assets (e.g., invoices, commodities) as Stellar assets with embedded metadata, use them as collateral in multi-signature escrows managed by **Soroban smart contracts**, and unlock instant cross-border liquidity.
+StelloVault is a trade finance dApp that enables SMEs to tokenize real-world assets (e.g., invoices, commodities) as Stellar assets with embedded metadata, use them as collateral in multi-signature escrows managed by **Soroban smart contracts**, and unlock instant cross-border liquidity.
 
 Key innovations:
 - **Collateral Tokenization** — Real assets become fractional, traceable Stellar tokens.
@@ -21,7 +21,7 @@ Key innovations:
 
 ### Why It Matters
 
-Africa faces a **trade finance gap of over $100–120 billion annually** (sources: Afreximbank, African Development Bank, World Bank estimates), disproportionately affecting SMEs — which represent >90% of businesses but are underserved by traditional finance. This stifles **$100B+ in potential exports** and intra-African trade under the **AfCFTA**.
+A **trade finance gap of over $100–120 billion annually** (sources: Afreximbank, African Development Bank, World Bank estimates), disproportionately affecting SMEs — which represent >90% of businesses but are underserved by traditional finance. This stifles **$100B+ in potential exports** and intra-African trade under the **AfCFTA**.
 
 StelloVault leverages:
 - Stellar's low-cost, fast settlements and native asset issuance
