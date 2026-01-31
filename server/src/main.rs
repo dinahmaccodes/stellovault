@@ -95,17 +95,22 @@ async fn main() {
     // Initialize WebSocket state
     let ws_state = websocket::WsState::new();
 
+    // Initialize collateral service
+    let collateral_service = collateral::CollateralService::new(
+        db_pool.clone(),
+        config.soroban_rpc_url.clone(),
+        config.contract_id.clone(),
+    );
+
     // Initialize escrow service
     let escrow_service = Arc::new(EscrowService::new(
         db_pool.clone(),
         config.horizon_url.clone(),
         config.network_passphrase.clone(),
+        collateral_service.clone(),
     ));
 
-    // Initialize collateral service
-    let collateral_service = Arc::new(collateral::CollateralService::new(
-        Arc::new(db_pool.clone()),
-    ));
+    let collateral_service = Arc::new(collateral_service);
 
     // Initialize oracle service
     let oracle_service = Arc::new(oracle_service::OracleService::new(
@@ -145,6 +150,17 @@ async fn main() {
 
     tokio::spawn(async move {
         indexer_service.start().await;
+    });
+
+    // Start collateral indexer
+    let collateral_indexer = collateral::CollateralIndexer::new(
+        db_pool.clone(),
+        config.soroban_rpc_url.clone(),
+        config.contract_id.clone(),
+    );
+    tokio::spawn(async move {
+        tracing::info!("Collateral indexer task started");
+        collateral_indexer.start().await;
     });
 
     // Start timeout detector in background
