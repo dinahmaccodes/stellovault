@@ -16,6 +16,7 @@ import confirmationRoutes from "./routes/confirmation.routes";
 import governanceRoutes from "./routes/governance.routes";
 import riskRoutes from "./routes/risk.routes";
 import analyticsRoutes from "./routes/analytics.routes";
+import collateralService from "./services/collateral.service";
 
 // Middleware
 import { rateLimitMiddleware } from "./middleware/rate-limit.middleware";
@@ -58,6 +59,9 @@ const port = env.port;
 app.listen(port, () => {
     console.log(`StelloVault server running on http://localhost:${port}`);
     console.log(`Routes mounted at ${api}`);
+    
+    // Start background jobs
+    collateralService.startIndexer();
 });
 
 export default app;
