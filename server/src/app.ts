@@ -2,7 +2,10 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import { createServer } from "http";
+import WebSocket from "ws";
 import { env } from "./config/env";
+import websocketService, { WsState } from "./services/websocket.service";
 
 // Routes
 import authRoutes from "./routes/auth.routes";
@@ -63,6 +66,7 @@ app.use(errorMiddleware);
 const port = env.port;
 const server = app.listen(port, () => {
     console.log(`StelloVault server running on http://localhost:${port}`);
+    console.log(`WebSocket endpoint: ws://localhost:${port}/ws`);
     console.log(`Routes mounted at ${api}`);
     
     // Start background jobs
