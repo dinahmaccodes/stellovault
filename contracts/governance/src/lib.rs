@@ -110,8 +110,8 @@ pub struct GovernanceConfig {
     pub min_voting_power: i128, // Minimum tokens to create proposal
 }
 
-impl GovernanceConfig {
-    pub fn default() -> Self {
+impl Default for GovernanceConfig {
+    fn default() -> Self {
         Self {
             voting_period: 604800,  // 7 days
             timelock_period: 86400, // 24 hours
@@ -205,7 +205,7 @@ impl Governance {
         env.storage()
             .instance()
             .get(&symbol_short!("config"))
-            .unwrap_or(GovernanceConfig::default())
+            .unwrap_or_default()
     }
 
     // ========================================================================
@@ -582,7 +582,7 @@ impl Governance {
     }
 
     /// Set voting power for testing
-    #[cfg(any(test, feature = "testutils"))]
+    #[cfg(test)]
     pub fn set_voting_power(env: Env, voter: Address, power: i128) {
         let key = (symbol_short!("vp"), voter);
         env.storage().persistent().set(&key, &power);
@@ -601,32 +601,32 @@ impl Governance {
 
         if parameter == &liq_thr {
             // Liquidation threshold: 50-95% (5000-9500 bps)
-            if value < 5000 || value > 9500 {
+            if !(5000..=9500).contains(&value) {
                 return Err(ContractError::InvalidValue);
             }
         } else if parameter == &liq_pen {
             // Liquidation penalty: 1-10% (100-1000 bps)
-            if value < 100 || value > 1000 {
+            if !(100..=1000).contains(&value) {
                 return Err(ContractError::InvalidValue);
             }
         } else if parameter == &min_hf {
             // Min health factor: 1.0-1.5 (10000-15000 bps)
-            if value < 10000 || value > 15000 {
+            if !(10000..=15000).contains(&value) {
                 return Err(ContractError::InvalidValue);
             }
         } else if parameter == &max_liq {
             // Max liquidation ratio: 25-50% (2500-5000 bps)
-            if value < 2500 || value > 5000 {
+            if !(2500..=5000).contains(&value) {
                 return Err(ContractError::InvalidValue);
             }
         } else if parameter == &grace_pd {
             // Grace period: 5 min - 24 hours (300-86400 seconds)
-            if value < 300 || value > 86400 {
+            if !(300..=86400).contains(&value) {
                 return Err(ContractError::InvalidValue);
             }
         } else if parameter == &liq_bon {
             // Liquidator bonus: 1-10% (100-1000 bps)
-            if value < 100 || value > 1000 {
+            if !(100..=1000).contains(&value) {
                 return Err(ContractError::InvalidValue);
             }
         } else {
@@ -994,6 +994,7 @@ mod test {
         });
     }
 
+    #[test]
     fn test_cast_vote_voting_ended() {
         let (env, admin, token, risk_assessment) = setup_env();
         let contract_id = env.register_contract(None, Governance);
